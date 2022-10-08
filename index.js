@@ -21,8 +21,8 @@ const dataBaseConfig = {
   port: "3306",
   password: "",
 };
-const XMLFilePath = `./${tablename}.xml`;
-// const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
+// const XMLFilePath = `./${tablename}.xml`;
+const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
 const reqUrl = "https://kaspi.kz/yml/offer-view/offers/";
 const reqBody = {
   cityId: myCity,
