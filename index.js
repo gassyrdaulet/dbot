@@ -3,6 +3,12 @@ import xml2js from "xml2js";
 import mysql from "mysql2/promise";
 import axios from "axios";
 
+`
+git add .
+git commit -m "init"
+git push
+`;
+
 /*************************START CONFIG***************************/
 //User
 const damp = 1;
@@ -14,10 +20,9 @@ const availabaleStorages = [1];
 //Global
 const asyncIterations = 15;
 const updateEveryXMinutes = 15;
+const repeat = true;
 // const XMLFilePath = `./${tablename}.xml`;
 const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
-
-//Default
 const dataBaseConfig = {
   host: "127.0.0.1",
   user: "root",
@@ -25,6 +30,8 @@ const dataBaseConfig = {
   port: "3306",
   password: "",
 };
+
+//Default
 const reqUrl = "https://kaspi.kz/yml/offer-view/offers/";
 const reqBody = {
   cityId: myCity,
@@ -162,7 +169,9 @@ const updatePrices = async () => {
   updateXML(newOffers);
 
   await conn.end();
-
+  if (!repeat) {
+    return;
+  }
   setTimeout(() => {
     updatePrices();
   }, updateEveryXMinutes * 60 * 1000);
