@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<kaspi_catalog date="string" xmlns="kaspiShopping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="kaspiShopping http://kaspi.kz/kaspishopping.xsd">
+  <company>HomeTechnologies</company>
+  <merchantid>15503068</merchantid>
+  <offers>
+    <offer sku="103054186_15503068">
+      <model>Рация WLN KD-C1</model>
+      <brand>WLN</brand>
+      <availabilities>
+        <availability storeId="PP1" available="yes"/>
+      </availabilities>
+      <price>7492</price>
+    </offer>
+    <offer sku="103054186_15503068">
+      <model>Рация WLN KD-C1</model>
+      <brand>WLN</brand>
+      <availabilities>
+        <availability storeId="PP1" available="yes"/>
+      </availabilities>
+      <price>7492</price>
+    </offer>
+  </offers>
+</kaspi_catalog>

@@ -14,8 +14,8 @@ const updateEveryXMinutes = 15;
 const tablename = "pricelist";
 const availabaleStorages = [1];
 //Default
-const XMLFilePath = `./${tablename}.xml`;
-// const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
+// const XMLFilePath = `./${tablename}.xml`;
+const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
 const reqUrl = "https://kaspi.kz/yml/offer-view/offers/";
 const reqBody = {
   cityId: myCity,
@@ -39,6 +39,7 @@ const reqHeaders = {
 
 /**************************START SCRAPING****************************/
 const updatePrices = async () => {
+  const startTime = new Date();
   const conn = mysql.createPool(config.get("dataBaseConfig"));
   const offers = (
     await conn.query(`SELECT * FROM ${tablename} WHERE activated = "yes"`)
@@ -136,9 +137,11 @@ const updatePrices = async () => {
     }
   }
   //END Update Database
-
+  const finishTime = new Date();
   console.log(
-    `\n${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}\nSucceeded ${succeededScrapes} scrapes of ${total}.`
+    `\n${finishTime.toLocaleDateString()} ${finishTime.toLocaleTimeString()}\nSucceeded ${succeededScrapes} scrapes of ${total}.\nTook time: ${
+      (finishTime - startTime) / 1000 + " seconds."
+    }`
   );
 
   updateXML(newOffers);
