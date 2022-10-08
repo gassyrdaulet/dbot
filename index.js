@@ -10,7 +10,7 @@ const damp = 1;
 const myCity = "710000000"; //Astana
 const myStoreName = "HomeTechnologies";
 const myStoreId = "15503068";
-const updateEveryXMinutes = 15;
+const updateEveryXMinutes = 2;
 const tablename = "pricelist";
 const availabaleStorages = [1];
 //Default
