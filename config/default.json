@@ -1,0 +1,9 @@
+{
+  "dataBaseConfig": {
+    "host": "127.0.0.1",
+    "user": "root",
+    "database": "kaspi_price_list",
+    "port": "3306",
+    "password": ""
+  }
+}
