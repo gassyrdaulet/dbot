@@ -4,16 +4,20 @@ import mysql from "mysql2/promise";
 import axios from "axios";
 
 /*************************START CONFIG***************************/
-//Editable
+//User
 const damp = 1;
 const myCity = "710000000"; //Astana
 const myStoreName = "HomeTechnologies";
 const myStoreId = "15503068";
-const updateEveryXMinutes = 15;
 const tablename = "pricelist";
 const availabaleStorages = [1];
-//Default
+//Global
+const asyncIterations = 10;
+const updateEveryXMinutes = 15;
+// const XMLFilePath = `./${tablename}.xml`;
+const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
 
+//Default
 const dataBaseConfig = {
   host: "127.0.0.1",
   user: "root",
@@ -21,8 +25,6 @@ const dataBaseConfig = {
   port: "3306",
   password: "",
 };
-// const XMLFilePath = `./${tablename}.xml`;
-const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
 const reqUrl = "https://kaspi.kz/yml/offer-view/offers/";
 const reqBody = {
   cityId: myCity,
@@ -111,51 +113,35 @@ const updatePrices = async () => {
   let total = offers.length;
   let succeededScrapes = 0;
 
-  for (let offer of offers) {
-    const newPrice = await getTheLowestPrice2(
-      offer.suk,
-      offer.minprice,
-      offer.maxprice,
-      offer.url
+  for (let i = 0; i < Math.ceil(offers.length / asyncIterations); i++) {
+    const chunk = offers.slice(
+      i * asyncIterations,
+      i * asyncIterations + asyncIterations
     );
+    await Promise.all(
+      chunk.map(async (offer) => {
+        const newPrice = await getTheLowestPrice2(
+          offer.suk,
+          offer.minprice,
+          offer.maxprice,
+          offer.url
+        );
 
-    newOffers.push({
-      id: offer.id,
-      actualPrice: newPrice === 0 ? offer.maxprice : newPrice,
-      suk2: offer.suk2,
-      model: offer.model,
-      availability: offer.availability,
-      availability2: offer.availability2,
-      availability3: offer.availability3,
-      availability4: offer.availability4,
-      availability5: offer.availability5,
-      brand: offer.brand,
-    });
+        newOffers.push({
+          id: offer.id,
+          actualPrice: newPrice === 0 ? offer.maxprice : newPrice,
+          suk2: offer.suk2,
+          model: offer.model,
+          availability: offer.availability,
+          availability2: offer.availability2,
+          availability3: offer.availability3,
+          availability4: offer.availability4,
+          availability5: offer.availability5,
+          brand: offer.brand,
+        });
+      })
+    );
   }
-
-  // await Promise.all(
-  //   offers.map(async (offer) => {
-  //     const newPrice = await getTheLowestPrice2(
-  //       offer.suk,
-  //       offer.minprice,
-  //       offer.maxprice,
-  //       offer.url
-  //     );
-
-  //     newOffers.push({
-  //       id: offer.id,
-  //       actualPrice: newPrice === 0 ? offer.maxprice : newPrice,
-  //       suk2: offer.suk2,
-  //       model: offer.model,
-  //       availability: offer.availability,
-  //       availability2: offer.availability2,
-  //       availability3: offer.availability3,
-  //       availability4: offer.availability4,
-  //       availability5: offer.availability5,
-  //       brand: offer.brand,
-  //     });
-  //   })
-  // );
 
   //START Update Database
   for (let offer of newOffers) {
