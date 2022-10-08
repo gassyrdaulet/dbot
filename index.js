@@ -1,7 +1,6 @@
 import fs from "fs/promises";
 import xml2js from "xml2js";
 import mysql from "mysql2/promise";
-import config from "config";
 import axios from "axios";
 
 /*************************START CONFIG***************************/
@@ -10,12 +9,20 @@ const damp = 1;
 const myCity = "710000000"; //Astana
 const myStoreName = "HomeTechnologies";
 const myStoreId = "15503068";
-const updateEveryXMinutes = 2;
+const updateEveryXMinutes = 15;
 const tablename = "pricelist";
 const availabaleStorages = [1];
 //Default
-// const XMLFilePath = `./${tablename}.xml`;
-const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
+
+const dataBaseConfig = {
+  host: "127.0.0.1",
+  user: "root",
+  database: "kaspi_price_list",
+  port: "3306",
+  password: "",
+};
+const XMLFilePath = `./${tablename}.xml`;
+// const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
 const reqUrl = "https://kaspi.kz/yml/offer-view/offers/";
 const reqBody = {
   cityId: myCity,
@@ -40,7 +47,7 @@ const reqHeaders = {
 /**************************START SCRAPING****************************/
 const updatePrices = async () => {
   const startTime = new Date();
-  const conn = mysql.createPool(config.get("dataBaseConfig"));
+  const conn = mysql.createPool(dataBaseConfig);
   const offers = (
     await conn.query(`SELECT * FROM ${tablename} WHERE activated = "yes"`)
   )[0];
@@ -104,29 +111,51 @@ const updatePrices = async () => {
   let total = offers.length;
   let succeededScrapes = 0;
 
-  await Promise.all(
-    offers.map(async (offer) => {
-      const newPrice = await getTheLowestPrice2(
-        offer.suk,
-        offer.minprice,
-        offer.maxprice,
-        offer.url
-      );
+  for (let offer of offers) {
+    const newPrice = await getTheLowestPrice2(
+      offer.suk,
+      offer.minprice,
+      offer.maxprice,
+      offer.url
+    );
 
-      newOffers.push({
-        id: offer.id,
-        actualPrice: newPrice === 0 ? offer.maxprice : newPrice,
-        suk2: offer.suk2,
-        model: offer.model,
-        availability: offer.availability,
-        availability2: offer.availability2,
-        availability3: offer.availability3,
-        availability4: offer.availability4,
-        availability5: offer.availability5,
-        brand: offer.brand,
-      });
-    })
-  );
+    newOffers.push({
+      id: offer.id,
+      actualPrice: newPrice === 0 ? offer.maxprice : newPrice,
+      suk2: offer.suk2,
+      model: offer.model,
+      availability: offer.availability,
+      availability2: offer.availability2,
+      availability3: offer.availability3,
+      availability4: offer.availability4,
+      availability5: offer.availability5,
+      brand: offer.brand,
+    });
+  }
+
+  // await Promise.all(
+  //   offers.map(async (offer) => {
+  //     const newPrice = await getTheLowestPrice2(
+  //       offer.suk,
+  //       offer.minprice,
+  //       offer.maxprice,
+  //       offer.url
+  //     );
+
+  //     newOffers.push({
+  //       id: offer.id,
+  //       actualPrice: newPrice === 0 ? offer.maxprice : newPrice,
+  //       suk2: offer.suk2,
+  //       model: offer.model,
+  //       availability: offer.availability,
+  //       availability2: offer.availability2,
+  //       availability3: offer.availability3,
+  //       availability4: offer.availability4,
+  //       availability5: offer.availability5,
+  //       brand: offer.brand,
+  //     });
+  //   })
+  // );
 
   //START Update Database
   for (let offer of newOffers) {
