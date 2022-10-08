@@ -12,7 +12,7 @@ const myStoreId = "15503068";
 const tablename = "pricelist";
 const availabaleStorages = [1];
 //Global
-const asyncIterations = 20;
+const asyncIterations = 10;
 const updateEveryXMinutes = 15;
 // const XMLFilePath = `./${tablename}.xml`;
 const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
