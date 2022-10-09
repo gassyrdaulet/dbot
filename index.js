@@ -70,19 +70,18 @@ const updatePrices = async () => {
     const { data: concur } = await axios.post(reqUrl + id, reqBody, reqHeaders);
 
     if (concur.offers[0]) {
+      if (concur.offers[0].merchantId === myStoreId) {
+        concur.offers[0].price = concur.offers[1].price;
+      }
       console.log("SKU=" + id + " scrape success!");
       succeededScrapes++;
       if (concur.offers[0].price > maxPrice) {
         price = maxPrice;
       } else if (concur.offers[0].price > minPrice) {
-        if (concur.offers[0].merchantId === myStoreId) {
-          price = concur.offers[0].price;
+        if (concur.offers[0].price - minPrice < damp) {
+          price = minPrice;
         } else {
-          if (concur.offers[0].price - minPrice < damp) {
-            price = minPrice;
-          } else {
-            price = concur.offers[0].price - damp;
-          }
+          price = concur.offers[0].price - damp;
         }
       } else if (concur.offers[0].price === minPrice) {
         price = concur.offers[0].price;
