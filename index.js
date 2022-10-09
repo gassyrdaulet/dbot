@@ -21,8 +21,8 @@ const availabaleStorages = [1];
 const asyncIterations = 15;
 const updateEveryXMinutes = 15;
 const repeat = true;
-// const XMLFilePath = `./${tablename}.xml`;
-const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
+const XMLFilePath = `./${tablename}.xml`;
+// const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
 const dataBaseConfig = {
   host: "127.0.0.1",
   user: "root",
@@ -64,7 +64,7 @@ const updatePrices = async () => {
   const newOffers = [];
 
   /****************START GET THE LOWEST PRICE WITHOUT HEADLESS***********************/
-  const getTheLowestPrice2 = async (id, minPrice, maxPrice, url) => {
+  const getTheLowestPrice2 = async (id, minPrice, maxPrice) => {
     let price = 0;
 
     const { data: concur } = await axios.post(reqUrl + id, reqBody, reqHeaders);
@@ -89,15 +89,14 @@ const updatePrices = async () => {
       } else if (concur.offers[0].price < minPrice) {
         for (let offer of concur.offers) {
           if (offer.kaspiDelivery === false) {
+            if (offer.merchantId === myStoreId) {
+              continue;
+            }
             if (offer.price > minPrice) {
-              if (offer.merchantId === myStoreId) {
-                price = offer.price;
+              if (offer.price - minPrice < damp) {
+                price = minPrice;
               } else {
-                if (offer.price - minPrice < damp) {
-                  price = minPrice;
-                } else {
-                  price = offer.price - damp;
-                }
+                price = offer.price - damp;
               }
             } else if (offer.price === minPrice) {
               price = minPrice;
@@ -130,8 +129,7 @@ const updatePrices = async () => {
         const newPrice = await getTheLowestPrice2(
           offer.suk,
           offer.minprice,
-          offer.maxprice,
-          offer.url
+          offer.maxprice
         );
 
         newOffers.push({
