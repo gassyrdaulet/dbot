@@ -234,6 +234,22 @@ const updateXML = async (newOffers = []) => {
     });
     XML.kaspi_catalog.offers[0] = { offer: temp };
   }
+  if (newOffers.length === 0) {
+    const availability = [{ $: { storeId: "PP1", available: "no" } }];
+    const temp = [];
+    temp.push({
+      $: { sku: "0000000" },
+      model: ["all deactivated"],
+      brand: ["all deactivated"],
+      availabilities: [
+        {
+          availability,
+        },
+      ],
+      price: [999999 + ""],
+    });
+    XML.kaspi_catalog.offers[0] = { offer: temp };
+  }
   // console.log(XML.kaspi_catalog.offers);
   // console.log(XML2.kaspi_catalog.offers);
   const builder = new xml2js.Builder();
