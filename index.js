@@ -21,8 +21,8 @@ const availabaleStorages = [1];
 const asyncIterations = 15;
 const updateEveryXMinutes = 15;
 const repeat = true;
-const XMLFilePath = `./${tablename}.xml`;
-// const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
+// const XMLFilePath = `./${tablename}.xml`;
+const XMLFilePath = `/home/apps/jmmanager/jmmanager-server/public/${tablename}.xml`;
 const dataBaseConfig = {
   host: "127.0.0.1",
   user: "root",
