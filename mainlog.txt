@@ -1,0 +1,25 @@
+
+
+****************************************************
+11.10.2022 23:53:08 SCRAPE START
+
+23:53:16 CHUNK [pricelist] SCRAPE END Took time: 7.726s
+ALL ENDED
+
+****************************************************
+12.10.2022 01:07:00 SCRAPE START
+
+01:07:13 CHUNK [pricelist,pricelist] SCRAPE END Took time: 12.722s
+ALL ENDED
+
+****************************************************
+12.10.2022 01:08:03 SCRAPE START
+
+01:08:13 CHUNK [pricelist,pricelist] SCRAPE END Took time: 9.807s
+ALL ENDED
+
+****************************************************
+12.10.2022 01:08:54 SCRAPE START
+
+01:09:06 CHUNK [pricelist,pricelist] SCRAPE END Took time: 11.665s
+ALL ENDED

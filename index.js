@@ -6,7 +6,7 @@ import axiosRetry from "axios-retry";
 import { users, offers } from "./db.js";
 
 //CONFIG
-const production = true;
+const production = false;
 const repeat = false;
 const updateEveryXMinutes = 15;
 const asyncIterations = 1000;
@@ -213,24 +213,28 @@ const start = async () => {
       XML.kaspi_catalog.merchantid = store_id;
       delete XML.kaspi_catalog.offers[0].offer;
       const temp = [];
+      console.log(available_storages);
+
       available_storages = available_storages.split(",");
+      console.log(available_storages);
+
       for (let offer of newOffers) {
         const availability = [];
         for (let storage of available_storages) {
           switch (storage) {
-            case 1:
+            case "1":
               availability.push(offer.availability);
               break;
-            case 2:
+            case "2":
               availability.push(offer.availability2);
               break;
-            case 3:
+            case "3":
               availability.push(offer.availability3);
               break;
-            case 4:
+            case "4":
               availability.push(offer.availability4);
               break;
-            case 5:
+            case "5":
               availability.push(offer.availability5);
               break;
           }
