@@ -6,7 +6,7 @@ import axiosRetry from "axios-retry";
 import { users, offers } from "./db.js";
 
 //CONFIG
-const production = false;
+const production = true;
 const repeat = false;
 const updateEveryXMinutes = 15;
 const asyncIterations = 1000;
@@ -213,10 +213,7 @@ const start = async () => {
       XML.kaspi_catalog.merchantid = store_id;
       delete XML.kaspi_catalog.offers[0].offer;
       const temp = [];
-      console.log(available_storages);
-
       available_storages = available_storages.split(",");
-      console.log(available_storages);
 
       for (let offer of newOffers) {
         const availability = [];
