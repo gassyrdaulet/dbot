@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kaspi_catalog date="string"
+              xmlns="kaspiShopping"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="kaspiShopping http://kaspi.kz/kaspishopping.xsd">
+   <company>CompanyName</company>
+    <merchantid>CompanyID</merchantid>
+    <offers>
+        <offer sku="232130213">
+            <model>iphone 5s white 32gb</model>
+            <brand>Apple</brand>
+            <availabilities>
+                <availability available="yes" storeId="myFavoritePickupPoint1"/>
+                <availability available="yes" storeId="myFavoritePickupPoint2"/>
+            </availabilities>
+            <price>6418</price>
+        </offer>
+        <offer sku="232130223">
+            <model>iphone 6s white 32gb</model>
+            <brand>Apple</brand>
+            <availabilities>
+                <availability available="yes" storeId="myFavoritePickupPoint1"/>
+                <availability available="yes" storeId="myFavoritePickupPoint2"/>
+            </availabilities>
+            <cityprices>
+            <cityprice cityId="750000000">193000</cityprice>
+            <cityprice cityId="710000000">195000</cityprice>
+            </cityprices>
+        </offer>
+    </offers>
+</kaspi_catalog>
