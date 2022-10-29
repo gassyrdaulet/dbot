@@ -5,6 +5,7 @@ import axios from "axios";
 import axiosRetry from "axios-retry";
 import { users, offers } from "./db.js";
 
+console.log(new Date() - 1 + 4 * 24 * 60 * 1000);
 //CONFIG
 const production = true;
 const repeat = false;
@@ -13,10 +14,10 @@ const asyncIterations = 1000;
 const asyncUserIterations = 3;
 const dataBaseConfig = {
   host: "127.0.0.1",
-  user: "root",
+  user: "gas",
+  password: "Zeveta1559!",
   database: "kaspi_price_list",
   port: "3306",
-  password: "",
 };
 const original = "./xml/original.xml";
 const reqUrl = "https://kaspi.kz/yml/offer-view/offers/";
