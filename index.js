@@ -7,7 +7,7 @@ import { users, offers } from "./db.js";
 
 console.log(new Date() - 1 + 4 * 24 * 60 * 1000);
 //CONFIG
-const production = false;
+const production = true;
 const repeat = false;
 const updateEveryXMinutes = 15;
 const asyncIterations = 1000;
