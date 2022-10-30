@@ -36,7 +36,7 @@ const reqHeaders = {
   },
 };
 const XMLFilePath = `./xml/`;
-const XMLFilePathProduction = `/home/apps/jmmanager/jmmanager-server/public/`;
+const XMLFilePathProduction = `/home/apps/tgbot/public/`;
 const LogFilePath = `./logs/`;
 const mainLogFilePath = `./mainlog.txt`;
 
