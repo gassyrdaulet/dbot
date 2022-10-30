@@ -68,6 +68,7 @@ const start = async () => {
     available_storages,
     damp,
   }) => {
+    console.log("start");
     let logtext = `\n\n***************************************************************************************\n${new Date()}\n`;
     const reqBody = {
       cityId: city,
