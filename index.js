@@ -5,7 +5,6 @@ import axios from "axios";
 import axiosRetry from "axios-retry";
 import { users, offers } from "./db.js";
 
-console.log(new Date() - 1 + 4 * 24 * 60 * 1000);
 //CONFIG
 const production = true;
 const repeat = false;
@@ -107,6 +106,16 @@ const start = async () => {
         });
 
       if (concur.offers[0]) {
+        console.log(
+          concur.offers.map((offer) => {
+            return Object.values({
+              merchantId: offer.merchantId,
+              merchantName: offer.merchantName,
+              kaspiDelivery: offer.kaspiDelivery,
+              price: offer.price,
+            });
+          })
+        );
         if (concur.offers[0].merchantId === store_id) {
           concur.offers[0].price = concur.offers[1].price;
         }
