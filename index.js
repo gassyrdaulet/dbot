@@ -7,7 +7,7 @@ import { users, offers } from "./db.js";
 
 console.log(new Date() - 1 + 4 * 24 * 60 * 1000);
 //CONFIG
-const production = true;
+const production = false;
 const repeat = false;
 const updateEveryXMinutes = 15;
 const asyncIterations = 1000;
@@ -16,6 +16,13 @@ const dataBaseConfig = {
   host: "127.0.0.1",
   user: "gas",
   password: "Zeveta1559!",
+  database: "kaspi_price_list",
+  port: "3306",
+};
+const dataBaseConfig1 = {
+  host: "127.0.0.1",
+  user: "root",
+  password: "",
   database: "kaspi_price_list",
   port: "3306",
 };
@@ -46,7 +53,9 @@ const start = async () => {
     `${startDate.toLocaleDateString()} ${startDate.toLocaleTimeString()} SCRAPE START`
   );
   let mainlog = `\n\n****************************************************\n${startDate.toLocaleDateString()} ${startDate.toLocaleTimeString()} SCRAPE START\n`;
-  const conn = await mysql.createConnection(dataBaseConfig);
+  const conn = await mysql.createConnection(
+    production ? dataBaseConfig : dataBaseConfig1
+  );
   //getting users
   const users = (await conn.query(`SELECT * FROM users`))[0];
 
@@ -141,7 +150,7 @@ const start = async () => {
           "SKU=" +
           id +
           " scrape failed! Seems like some data is not valid...\n";
-        // console.log("SKU=" + id + " scrape failed!");
+        console.log("SKU=" + id + " scrape failed!");
         price = maxPrice;
       }
       return price;
