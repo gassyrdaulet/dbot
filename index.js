@@ -68,12 +68,13 @@ const start = async () => {
     available_storages,
     damp,
   }) => {
-    console.log("start");
     let logtext = `\n\n***************************************************************************************\n${new Date()}\n`;
     const reqBody = {
       cityId: city,
       limit: 64,
     };
+    console.log("start");
+
     axiosRetry(axios, {
       retries: 3, // number of retries
       retryDelay: (retryCount) => {
@@ -84,10 +85,13 @@ const start = async () => {
         return;
       },
     });
+    console.log("start1");
+
     const startTime = new Date();
     const offers = (
       await conn.query(`SELECT * FROM ${tablename} WHERE activated = "yes"`)
     )[0];
+    console.log("start2");
 
     const newOffers = [];
 
@@ -219,6 +223,8 @@ const start = async () => {
         );
       }
     }
+    console.log("start3");
+
     //END Update Database
 
     const updateXML = async () => {
