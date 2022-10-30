@@ -104,7 +104,7 @@ const start = async () => {
             throw new Error(`${err}`);
           }
         });
-
+      console.log("started");
       if (concur.offers[0]) {
         console.log(
           concur.offers.map((offer) => {
