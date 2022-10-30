@@ -101,6 +101,7 @@ const start = async () => {
     /****************START GET THE LOWEST PRICE WITHOUT HEADLESS***********************/
     const getTheLowestPrice2 = async (id, minPrice, maxPrice) => {
       let price = 0;
+      console.log("started");
 
       const { data: concur } = await axios
         .post(reqUrl + id, reqBody, reqHeaders)
@@ -109,7 +110,6 @@ const start = async () => {
             throw new Error(`${err}`);
           }
         });
-      console.log("started");
       if (concur.offers[0]) {
         console.log(
           concur.offers.map((offer) => {
