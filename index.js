@@ -172,6 +172,7 @@ const start = async () => {
     /****************END GET THE LOWEST PRICE WITHOUT HEADLESS***********************/
 
     for (let i = 0; i < Math.ceil(offers.length / asyncIterations); i++) {
+      console.log("chuncks" + i);
       const chunk = offers.slice(
         i * asyncIterations,
         i * asyncIterations + asyncIterations
